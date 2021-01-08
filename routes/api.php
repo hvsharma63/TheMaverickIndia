@@ -18,6 +18,11 @@ Route::post('/login', 'Api\AuthController@login');
 Route::post('/contact-us', 'Api\ContactController@store');
 Route::get('/gallery', 'Api\GalleryController@clientIndex');
 
+Route::get('images/{filename}', function ($filename) {
+    $file = \Illuminate\Support\Facades\Storage::get($filename);
+    return response($file, 200)->header('Content-Type', 'image/jpeg');
+});
+
 Route::group(['prefix' => 'api', 'middleware' => 'auth:api'], function () {
 
     Route::group(['prefix' => 'contact-us'], function () {
